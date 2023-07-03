@@ -12,33 +12,34 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class PlanterBlockEntityRenderer implements BlockEntityRenderer<PlanterBlockEntity> {
+public class PlanterRenderer implements BlockEntityRenderer<PlanterBlockEntity> {
     private final BlockRenderDispatcher blockRenderer;
 
-    public PlanterBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+    public PlanterRenderer(BlockEntityRendererProvider.Context context) {
         this.blockRenderer = context.getBlockRenderDispatcher();
     }
 
     @Override
     public void render(PlanterBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        BlockState blockState1 = Blocks.AIR.defaultBlockState();
-        BlockState blockState2 = Blocks.AIR.defaultBlockState();
-        BlockState blockState3 = Blocks.AIR.defaultBlockState();
+        pPoseStack.pushPose();
+
+        BlockState blockState1;
+        BlockState blockState2;
+        BlockState blockState3;
 
         if (pBlockEntity.getPlant(PlanterBlock.Slot.RIGHT).getItem() instanceof BlockItem blockItem) {
             blockState1 = blockItem.getBlock().defaultBlockState();
-        }
+        } else blockState1 = Blocks.AIR.defaultBlockState();
         if (pBlockEntity.getPlant(PlanterBlock.Slot.MIDDLE).getItem() instanceof BlockItem blockItem) {
             blockState2 = blockItem.getBlock().defaultBlockState();
-        }
+        } else blockState2 = Blocks.AIR.defaultBlockState();
         if (pBlockEntity.getPlant(PlanterBlock.Slot.LEFT).getItem() instanceof BlockItem blockItem) {
             blockState3 = blockItem.getBlock().defaultBlockState();
-        }
+        } else blockState3 = Blocks.AIR.defaultBlockState();
 
         float f = pBlockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).getClockWise().toYRot();
 
         BakedModel bakedModel = this.blockRenderer.getBlockModel(blockState1);
-        pPoseStack.pushPose();
         pPoseStack.translate(0.5F, 0.25F, 0.5F);
         pPoseStack.mulPose(Axis.YP.rotationDegrees(-f));
         pPoseStack.scale(0.8F, 0.8F, 0.8F);

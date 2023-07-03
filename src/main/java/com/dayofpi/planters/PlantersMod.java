@@ -2,7 +2,7 @@ package com.dayofpi.planters;
 
 import com.dayofpi.planters.block.ModBlockEntities;
 import com.dayofpi.planters.block.ModBlocks;
-import com.dayofpi.planters.block.PlanterBlockEntityRenderer;
+import com.dayofpi.planters.block.PlanterRenderer;
 import com.dayofpi.planters.item.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.sounds.SoundEvents;
@@ -57,7 +57,7 @@ public class PlantersMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(ModBlockEntities.PLANTER.get(), PlanterBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.PLANTER.get(), PlanterRenderer::new);
         }
     }
 }

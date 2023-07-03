@@ -1,14 +1,16 @@
 package com.dayofpi.planters.block;
 
 import com.dayofpi.planters.PlantersMod;
+import com.dayofpi.planters.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -17,11 +19,14 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -44,16 +49,44 @@ public class PlanterBlock extends BaseEntityBlock {
         BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
         if (blockEntity instanceof PlanterBlockEntity planterBlockEntity) {
             ItemStack itemStack = pPlayer.getItemInHand(pHand);
-            boolean isPlaceable = itemStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof FlowerBlock;
+            boolean isPlaceable = itemStack.is(ModTags.PLANTER_PLANTABLES);
             ItemStack itemStack1 = planterBlockEntity.getPlant(Slot.RIGHT);
+            ItemStack itemStack2 = planterBlockEntity.getPlant(Slot.MIDDLE);
+            ItemStack itemStack3 = planterBlockEntity.getPlant(Slot.LEFT);
             if (isPlaceable && itemStack1.isEmpty()) {
-                planterBlockEntity.setPlant(Slot.RIGHT, itemStack.split(1));
+                this.setPlant(planterBlockEntity, Slot.RIGHT, pPlayer, itemStack);
+            } else if (isPlaceable && itemStack2.isEmpty()) {
+                this.setPlant(planterBlockEntity, Slot.MIDDLE, pPlayer, itemStack);
+            }  else if (isPlaceable && itemStack3.isEmpty()) {
+                this.setPlant(planterBlockEntity, Slot.LEFT, pPlayer, itemStack);
             } else {
-                Block.popResource(pLevel, pPos, itemStack1.copy());
-                planterBlockEntity.setPlant(Slot.RIGHT, ItemStack.EMPTY);
+                if (!itemStack3.isEmpty()) {
+                    Block.popResource(pLevel, pPos, itemStack3.copyWithCount(1));
+                    this.setPlant(planterBlockEntity, Slot.LEFT, pPlayer, ItemStack.EMPTY);
+                } else if (!itemStack2.isEmpty()) {
+                    Block.popResource(pLevel, pPos, itemStack2.copyWithCount(1));
+                    this.setPlant(planterBlockEntity, Slot.MIDDLE, pPlayer, ItemStack.EMPTY);
+                } else if (!itemStack1.isEmpty()) {
+                    Block.popResource(pLevel, pPos, itemStack1.copyWithCount(1));
+                    this.setPlant(planterBlockEntity, Slot.RIGHT, pPlayer, ItemStack.EMPTY);
+                } else return InteractionResult.PASS;
             }
         }
         return InteractionResult.sidedSuccess(pLevel.isClientSide);
+    }
+
+    private void setPlant(PlanterBlockEntity planterBlockEntity, Slot slot, Player player, ItemStack itemStack) {
+        Level level = planterBlockEntity.getLevel();
+        if (level == null)
+            return;
+        if (!itemStack.isEmpty()) {
+            planterBlockEntity.setPlant(slot, itemStack.copyWithCount(1));
+            if (!player.getAbilities().instabuild)
+                itemStack.shrink(1);
+            level.playSound(null, planterBlockEntity.getBlockPos(), SoundEvents.CROP_PLANTED, SoundSource.BLOCKS, 1.0F, 1.2F);
+        }
+        level.gameEvent(GameEvent.BLOCK_CHANGE, planterBlockEntity.getBlockPos(), GameEvent.Context.of(player, planterBlockEntity.getBlockState()));
+        planterBlockEntity.setPlant(slot, itemStack);
     }
 
     @Override
@@ -64,7 +97,7 @@ public class PlanterBlock extends BaseEntityBlock {
                 Direction direction = pState.getValue(FACING);
 
                 for (Slot slot : Slot.values()) {
-                    ItemStack itemstack = ((PlanterBlockEntity) blockentity).getPlant(slot).copy();
+                    ItemStack itemstack = ((PlanterBlockEntity) blockentity).getPlant(slot).copyWithCount(1);
                     if (!itemstack.isEmpty()) {
                         float f = 0.25F * (float) direction.getStepX();
                         float f1 = 0.25F * (float) direction.getStepZ();
@@ -129,6 +162,12 @@ public class PlanterBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new PlanterBlockEntity(pPos, pState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.PLANTER.get(), PlanterBlockEntity::tick);
     }
 
     @Override

@@ -2,14 +2,21 @@ package com.dayofpi.planters.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.Nullable;
 
 public class PlanterBlockEntity extends BlockEntity {
     ItemStack rightPlant = ItemStack.EMPTY;
     ItemStack middlePlant = ItemStack.EMPTY;
     ItemStack leftPlant = ItemStack.EMPTY;
+    private final RandomSource random = RandomSource.create();
+    private int spreadDelay = this.random.nextInt(6000) + 6000;
 
     public PlanterBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.PLANTER.get(), pPos, pBlockState);
@@ -46,6 +53,20 @@ public class PlanterBlockEntity extends BlockEntity {
     }
 
     @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag compoundtag = super.getUpdateTag();
+        compoundtag.put("RightPlant", this.rightPlant.save(new CompoundTag()));
+        compoundtag.put("MiddlePlant", this.middlePlant.save(new CompoundTag()));
+        compoundtag.put("LeftPlant", this.leftPlant.save(new CompoundTag()));
+        return compoundtag;
+    }
+
+    @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         if (!this.getPlant(PlanterBlock.Slot.RIGHT).isEmpty()) {
@@ -56,6 +77,34 @@ public class PlanterBlockEntity extends BlockEntity {
         }
         if (!this.getPlant(PlanterBlock.Slot.LEFT).isEmpty()) {
             pTag.put("LeftPlant", this.getPlant(PlanterBlock.Slot.LEFT).save(new CompoundTag()));
+        }
+    }
+
+    @Nullable
+    private PlanterBlock.Slot getSpreadableSlot() {
+        for (PlanterBlock.Slot slot : PlanterBlock.Slot.values()) {
+            if (this.getPlant(slot).isEmpty())
+                return slot;
+        }
+        return null;
+    }
+
+    private ItemStack getSpreadablePlant() {
+        for (PlanterBlock.Slot slot : PlanterBlock.Slot.values()) {
+            if (!this.getPlant(slot).isEmpty())
+                return this.getPlant(slot);
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public static void tick(Level level, BlockPos blockPos, BlockState blockState, PlanterBlockEntity planterBlockEntity) {
+        PlanterBlock.Slot slot = planterBlockEntity.getSpreadableSlot();
+        ItemStack itemStack = planterBlockEntity.getSpreadablePlant();
+        if (slot != null && !itemStack.isEmpty() && --planterBlockEntity.spreadDelay <= 0) {
+            planterBlockEntity.setPlant(slot, itemStack.copyWithCount(1));
+            level.gameEvent(null, GameEvent.BLOCK_CHANGE, planterBlockEntity.worldPosition);
+            level.levelEvent(2005, blockPos, 0);
+            planterBlockEntity.spreadDelay = planterBlockEntity.random.nextInt(6000) + 6000;
         }
     }
 }
