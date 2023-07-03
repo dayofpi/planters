@@ -81,7 +81,7 @@ public class PlanterBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return null;
+        return new PlanterBlockEntity(pPos, pState);
     }
 
     @Override
