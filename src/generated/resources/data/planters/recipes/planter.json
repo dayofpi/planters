@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:brick"
+    },
+    "C": {
+      "item": "minecraft:chain"
+    }
+  },
+  "pattern": [
+    "C C",
+    "B B",
+    "BBB"
+  ],
+  "result": {
+    "count": 3,
+    "item": "planters:planter"
+  },
+  "show_notification": true
+}

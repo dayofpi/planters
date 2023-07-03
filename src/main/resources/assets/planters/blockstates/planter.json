@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,hanging=false": {
+      "model": "planters:block/planter",
+      "y": 90
+    },
+    "facing=north,hanging=false": {
+      "model": "planters:block/planter"
+    },
+    "facing=south,hanging=false": {
+      "model": "planters:block/planter",
+      "y": 180
+    },
+    "facing=west,hanging=false": {
+      "model": "planters:block/planter",
+      "y": 270
+    },
+    "facing=east,hanging=true": {
+      "model": "planters:block/planter_hanging",
+      "y": 90
+    },
+    "facing=north,hanging=true": {
+      "model": "planters:block/planter_hanging"
+    },
+    "facing=south,hanging=true": {
+      "model": "planters:block/planter_hanging",
+      "y": 180
+    },
+    "facing=west,hanging=true": {
+      "model": "planters:block/planter_hanging",
+      "y": 270
+    }
+  }
+}
