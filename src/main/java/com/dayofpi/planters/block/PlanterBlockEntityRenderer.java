@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,9 +21,20 @@ public class PlanterBlockEntityRenderer implements BlockEntityRenderer<PlanterBl
 
     @Override
     public void render(PlanterBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        BlockState blockState1 = Blocks.POPPY.defaultBlockState();
-        BlockState blockState2 = Blocks.DANDELION.defaultBlockState();
-        BlockState blockState3 = Blocks.CORNFLOWER.defaultBlockState();
+        BlockState blockState1 = Blocks.AIR.defaultBlockState();
+        BlockState blockState2 = Blocks.AIR.defaultBlockState();
+        BlockState blockState3 = Blocks.AIR.defaultBlockState();
+
+        if (pBlockEntity.getPlant(PlanterBlock.Slot.RIGHT).getItem() instanceof BlockItem blockItem) {
+            blockState1 = blockItem.getBlock().defaultBlockState();
+        }
+        if (pBlockEntity.getPlant(PlanterBlock.Slot.MIDDLE).getItem() instanceof BlockItem blockItem) {
+            blockState2 = blockItem.getBlock().defaultBlockState();
+        }
+        if (pBlockEntity.getPlant(PlanterBlock.Slot.LEFT).getItem() instanceof BlockItem blockItem) {
+            blockState3 = blockItem.getBlock().defaultBlockState();
+        }
+
         float f = pBlockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).getClockWise().toYRot();
 
         BakedModel bakedModel = this.blockRenderer.getBlockModel(blockState1);
