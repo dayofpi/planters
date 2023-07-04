@@ -5,7 +5,7 @@
         "facing": "east"
       },
       "apply": {
-        "model": "planters:block/planter",
+        "model": "planters:block/magenta_planter",
         "y": 90
       }
     },
@@ -14,7 +14,7 @@
         "facing": "north"
       },
       "apply": {
-        "model": "planters:block/planter"
+        "model": "planters:block/magenta_planter"
       }
     },
     {
@@ -22,7 +22,7 @@
         "facing": "south"
       },
       "apply": {
-        "model": "planters:block/planter",
+        "model": "planters:block/magenta_planter",
         "y": 180
       }
     },
@@ -31,7 +31,7 @@
         "facing": "west"
       },
       "apply": {
-        "model": "planters:block/planter",
+        "model": "planters:block/magenta_planter",
         "y": 270
       }
     },

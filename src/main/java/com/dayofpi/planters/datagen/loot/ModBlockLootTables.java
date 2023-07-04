@@ -16,7 +16,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        this.dropSelf(ModBlocks.PLANTER.get());
+        for (Block block : this.getKnownBlocks()) {
+            this.dropSelf(block);
+        }
     }
 
     @Override

@@ -12,7 +12,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -43,14 +42,25 @@ public class PlantersMod {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS || event.getTabKey() == CreativeModeTabs.COLORED_BLOCKS) {
             event.accept(ModBlocks.PLANTER);
+            event.accept(ModBlocks.WHITE_PLANTER);
+            event.accept(ModBlocks.LIGHT_GRAY_PLANTER);
+            event.accept(ModBlocks.GRAY_PLANTER);
+            event.accept(ModBlocks.BLACK_PLANTER);
+            event.accept(ModBlocks.BROWN_PLANTER);
+            event.accept(ModBlocks.RED_PLANTER);
+            event.accept(ModBlocks.ORANGE_PLANTER);
+            event.accept(ModBlocks.YELLOW_PLANTER);
+            event.accept(ModBlocks.LIME_PLANTER);
+            event.accept(ModBlocks.GREEN_PLANTER);
+            event.accept(ModBlocks.CYAN_PLANTER);
+            event.accept(ModBlocks.LIGHT_BLUE_PLANTER);
+            event.accept(ModBlocks.BLUE_PLANTER);
+            event.accept(ModBlocks.PURPLE_PLANTER);
+            event.accept(ModBlocks.MAGENTA_PLANTER);
+            event.accept(ModBlocks.PINK_PLANTER);
         }
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

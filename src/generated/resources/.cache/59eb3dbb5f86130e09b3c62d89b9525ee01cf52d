@@ -1,2 +1,18 @@
-// 1.20.1	2023-07-03T03:53:10.7746404	Loot Tables
+// 1.20.1	2023-07-04T06:08:09.8869143	Loot Tables
+9bfc2df0e58703ece12d84c6b0e432cc2d710771 data/planters/loot_tables/blocks/black_planter.json
+d100571e21bf8cb4f24904caece99c4a3f570b24 data/planters/loot_tables/blocks/blue_planter.json
+91a52136173d20727e46f7ec1b8648de193fe73a data/planters/loot_tables/blocks/brown_planter.json
+4738b7b3156998d08fd45a1b93756d5535e717aa data/planters/loot_tables/blocks/cyan_planter.json
+db3071126643f7a381caef5ccbc068f049901c71 data/planters/loot_tables/blocks/gray_planter.json
+f95b3dd8ea8b14ebc6ff91304fb3e26f70d6957b data/planters/loot_tables/blocks/green_planter.json
+cd9ef0bf98f3e7f4acb8b39a6de08c706a15e768 data/planters/loot_tables/blocks/light_blue_planter.json
+8fd21642f7859b4ccd9d5cf9392cbb39dd59a1d9 data/planters/loot_tables/blocks/light_gray_planter.json
+bf73e80e0f39e603c95dc8c7057d362797ee8f86 data/planters/loot_tables/blocks/lime_planter.json
+2d5649ec410bc0f96f8f93ec0119d27e355353f6 data/planters/loot_tables/blocks/magenta_planter.json
+38183ba717dddf76a4c7ea18104dfd995b483ef8 data/planters/loot_tables/blocks/orange_planter.json
+09c717dc52a8d1dc4475620ea32aa40331e46839 data/planters/loot_tables/blocks/pink_planter.json
 32fff04b567a70970448bd468fbb8f51752cef12 data/planters/loot_tables/blocks/planter.json
+458e729940751c7a0b0ac041633dae5ad0ce2803 data/planters/loot_tables/blocks/purple_planter.json
+a664af73fb333cc398f97e339e8affbc8e1180e8 data/planters/loot_tables/blocks/red_planter.json
+dcd7ae3f3ec5859154d0a0ebc762652cd8f5c16f data/planters/loot_tables/blocks/white_planter.json
+01cb61ee56465bcc1f574525cd37a7ff3b3e12a6 data/planters/loot_tables/blocks/yellow_planter.json

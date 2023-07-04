@@ -1,3 +1,20 @@
 {
-  "block.planters.planter": "Planter"
+  "block.planters.planter": "Planter",
+  "block.planters.white_planter": "White Planter",
+  "block.planters.light_gray_planter": "Light Gray Planter",
+  "block.planters.gray_planter": "Gray Planter",
+  "block.planters.black_planter": "Black Planter",
+  "block.planters.brown_planter": "Brown Planter",
+  "block.planters.red_planter": "Red Planter",
+  "block.planters.orange_planter": "Orange Planter",
+  "block.planters.yellow_planter": "Yellow Planter",
+  "block.planters.lime_planter": "Lime Planter",
+  "block.planters.green_planter": "Green Planter",
+  "block.planters.cyan_planter": "Cyan Planter",
+  "block.planters.light_blue_planter": "Light Blue Planter",
+  "block.planters.blue_planter": "Blue Planter",
+  "block.planters.purple_planter": "Purple Planter",
+  "block.planters.magenta_planter": "Magenta Planter",
+  "block.planters.pink_planter": "Pink Planter"
+
 }

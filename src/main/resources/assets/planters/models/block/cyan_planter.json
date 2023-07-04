@@ -1,0 +1,6 @@
+{
+	"parent": "planters:block/planter",
+	"textures": {
+		"planter": "planters:block/cyan_planter"
+	}
+}
