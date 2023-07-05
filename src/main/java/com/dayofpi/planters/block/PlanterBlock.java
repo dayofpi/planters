@@ -80,13 +80,13 @@ public class PlanterBlock extends BaseEntityBlock {
         if (level == null)
             return;
         if (!itemStack.isEmpty()) {
-            planterBlockEntity.setPlant(slot, itemStack.copyWithCount(1));
             if (!player.getAbilities().instabuild)
                 itemStack.shrink(1);
             level.playSound(null, planterBlockEntity.getBlockPos(), SoundEvents.CROP_PLANTED, SoundSource.BLOCKS, 1.0F, 1.2F);
         }
         level.gameEvent(GameEvent.BLOCK_CHANGE, planterBlockEntity.getBlockPos(), GameEvent.Context.of(player, planterBlockEntity.getBlockState()));
-        planterBlockEntity.setPlant(slot, itemStack);
+        planterBlockEntity.setPlant(slot, itemStack.copyWithCount(1));
+        planterBlockEntity.setChanged();
     }
 
     @Override
