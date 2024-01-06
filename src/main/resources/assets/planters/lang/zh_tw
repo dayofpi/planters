@@ -1,0 +1,20 @@
+{
+  "block.planters.planter": "盆栽",
+  "block.planters.white_planter": "白色盆栽",
+  "block.planters.light_gray_planter": "淺灰色盆栽",
+  "block.planters.gray_planter": "灰色盆栽",
+  "block.planters.black_planter": "黑色盆栽",
+  "block.planters.brown_planter": "棕色盆栽",
+  "block.planters.red_planter": "紅色盆栽",
+  "block.planters.orange_planter": "橙色盆栽",
+  "block.planters.yellow_planter": "黃色盆栽",
+  "block.planters.lime_planter": "淺綠色盆栽",
+  "block.planters.green_planter": "綠色盆栽",
+  "block.planters.cyan_planter": "青色盆栽",
+  "block.planters.light_blue_planter": "淺藍色盆栽",
+  "block.planters.blue_planter": "藍色盆栽",
+  "block.planters.purple_planter": "紫色盆栽",
+  "block.planters.magenta_planter": "洋紅色盆栽",
+  "block.planters.pink_planter": "粉色盆栽"
+
+}
